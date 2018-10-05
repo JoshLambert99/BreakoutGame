@@ -32,8 +32,8 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
-		timer = new Timer(delay, this); //object for timer
-		timer.start(); //ignore errors for moment
+		//timer = new Timer(delay, this); //object for timer
+		//timer.start(); //ignore errors for moment
 	}
 	
 	public void paint(Graphics g)
@@ -62,35 +62,48 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 		
 	}
 	
-	
-	
-	
+		
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 	
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
+		if(e.getKeyCode()== KeyEvent.VK_RIGHT) {
+			
+			if(playerX >= 600)
+				playerX = 600;
+		} else {
+			moveRight(); //gonna incremnt x
+		}
+		
+		if(e.getKeyCode()== KeyEvent.VK_LEFT) {
+				if(playerX <10)
+					playerX = 10;
+			} else {
+				moveLeft(); 
+			}	
 		
 	}
+	
+	
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+	public void moveRight() {
 		
+		play = true; //set to false at top
+		playerX+= 20; //move
+	
 	}
 
-
-
+	public void moveLeft() {
+			
+			play = true; //set to false at top
+			playerX-= 20; //move
+		
+	}
 		
 	
 }
