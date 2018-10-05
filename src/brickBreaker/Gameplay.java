@@ -1,5 +1,7 @@
 package brickBreaker;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -22,11 +24,41 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 	private int playerX = 310; //start pos.
 	
 	private int ballposX = 120; //start pos.
-	private int ballposy = 350;
+	private int ballposY = 350;
 	private int ballXdir = -1;
 	private int ballYdir = -2;
 
 	public Gameplay() {
+		addKeyListener(this);
+		setFocusable(true);
+		setFocusTraversalKeysEnabled(false);
+		timer = new Timer(delay, this); //object for timer
+		timer.start(); //ignore errors for moment
+	}
+	
+	public void paint(Graphics g)
+	{
+		//background
+		g.setColor(Color.black);
+		g.fillRect(1, 1, 692, 592);
+		
+		//borders
+		g.setColor(Color.YELLOW);
+		g.fillRect(0, 0, 3, 592); //three rectangles for border
+		g.fillRect(0, 0, 692, 3);
+		g.fillRect(691, 0, 3, 592);
+		
+		//the paddle
+		g.setColor(Color.green);
+		g.fillRect(playerX, 550, 100, 8);
+		
+		
+		//the ball
+		g.setColor(Color.YELLOW);
+		g.fillRect(ballposX, ballposY, 20, 20);
+		
+		
+
 		
 	}
 	
