@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Timer;
+import javax.swing.Timer;
 
 import javax.swing.JPanel;
 
@@ -18,7 +18,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 	
 	private int totalBricks = 21;
 	
-	private Timer time; //setting time of how fast ball moves
+	private Timer timer; //setting time of how fast ball moves
 	private int delay = 8; //speed of timer
 	
 	private int playerX = 310; //start pos.
@@ -32,8 +32,8 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
-		//timer = new Timer(delay, this); //object for timer
-		//timer.start(); //ignore errors for moment
+		timer = new Timer(delay, this); //object for timer
+		timer.start(); 
 	}
 	
 	public void paint(Graphics g)
@@ -55,17 +55,18 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 		
 		//the ball
 		g.setColor(Color.YELLOW);
-		g.fillRect(ballposX, ballposY, 20, 20);
+		g.fillOval(ballposX, ballposY, 20, 20);
 		
 		
-
+		g.dispose();
 		
 	}
 	
 		
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		timer.start();
+		repaint(); //draws everything again, calls paint method again
 	}
 	
 	
@@ -74,18 +75,19 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode()== KeyEvent.VK_RIGHT) {
 			
+			if(playerX <10)
+				playerX = 10;
+		} else {
+			moveLeft(); 
+		}
+		
+		if(e.getKeyCode()== KeyEvent.VK_LEFT) {
+					
 			if(playerX >= 600)
 				playerX = 600;
 		} else {
 			moveRight(); //gonna incremnt x
 		}
-		
-		if(e.getKeyCode()== KeyEvent.VK_LEFT) {
-				if(playerX <10)
-					playerX = 10;
-			} else {
-				moveLeft(); 
-			}	
 		
 	}
 	
