@@ -2,6 +2,7 @@ package brickBreaker;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -66,6 +67,30 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		timer.start();
+		
+		if(play) { //if arrow key is pressed
+			
+			if(new Rectangle(ballposX,ballposY, 20,20).intersects(new Rectangle(playerX, 550,100,8)))
+			{
+				ballYdir = -ballYdir;
+			}
+			
+			ballposX += ballXdir;
+			ballposY += ballYdir;
+			
+			if(ballposX < 0) {
+				ballXdir = - ballXdir; //left border
+			}
+			
+			if(ballposY < 0) {
+				ballYdir = - ballYdir; //top border
+			}
+			
+			if(ballposX > 670) {
+				ballXdir = - ballXdir; //right border
+			}
+		}
+		
 		repaint(); //draws everything again, calls paint method again
 	}
 	
@@ -73,21 +98,21 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode()== KeyEvent.VK_RIGHT) {
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			
-			if(playerX <10)
-				playerX = 10;
-		} else {
-			moveLeft(); 
-		}
-		
-		if(e.getKeyCode()== KeyEvent.VK_LEFT) {
-					
 			if(playerX >= 600)
 				playerX = 600;
 		} else {
-			moveRight(); //gonna incremnt x
+			moveLeft(); //gonna incremnt x
 		}
+		
+		if(e.getKeyCode()== KeyEvent.VK_LEFT) {
+				if(playerX < 10)
+					playerX = 10;
+			} else {
+				moveRight(); 
+			}
+		
 		
 	}
 	
@@ -96,24 +121,22 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 	public void moveRight() {
 		
 		play = true; //set to false at top
-		playerX+= 20; //move
+		playerX += 20; //move
 	
 	}
 
 	public void moveLeft() {
 			
 			play = true; //set to false at top
-			playerX-= 20; //move
+			playerX -= 20; //move
 		
 	}
 
-	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
