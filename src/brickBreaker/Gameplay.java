@@ -22,7 +22,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 	private int totalBricks = 21;
 	
 	private Timer timer; //setting time of how fast ball moves
-	private int delay = 8; //speed of timer
+	private int delay = 4; //speed of timer
 	
 	private int playerX = 310; //start pos.
 	
@@ -70,6 +70,32 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 		//the ball
 		g.setColor(Color.YELLOW);
 		g.fillOval(ballposX, ballposY, 20, 20);
+		
+		if(totalBricks == 0) {
+			play = false;
+			ballXdir = 0;
+			ballYdir = 0;
+			
+			g.setColor(Color.RED);
+			g.setFont(new Font ("serif", Font.BOLD, 30));
+			g.drawString("You Won!!!!! Score: " +score,190  , 300);
+			
+			g.setFont(new Font ("serif", Font.BOLD, 20));
+			g.drawString("Press Enter to Restart",  230,  350);
+		}
+		
+		if(ballposY > 570) { //if ball goes below paddle
+			play = false;
+			ballXdir = 0;
+			ballYdir = 0;
+			
+			g.setColor(Color.RED);
+			g.setFont(new Font ("serif", Font.BOLD, 30));
+			g.drawString("GAME OVER! Score: " +score,190  , 300);
+			
+			g.setFont(new Font ("serif", Font.BOLD, 20));
+			g.drawString("Press Enter to Restart",  230,  350);
+		}
 		
 		
 		g.dispose();
@@ -145,6 +171,26 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
+		
+		if(e.getKeyCode() == KeyEvent.VK_ENTER)
+		{
+			if(!play) {
+				//restarting the game, initiallising everything again
+				play = true;
+				ballposX = 120;
+				ballposY = 350;
+				ballXdir = -1;
+				ballYdir = -2;
+				playerX = 310;
+				score = 0;
+				totalBricks = 21;
+				map = new MapGenerator(3,7);
+				
+				repaint();
+			}
+		}
+		
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			
 			if(playerX >= 600)
@@ -161,6 +207,7 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 			}
 		
 		
+		
 	}
 	
 	
@@ -168,14 +215,14 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 	public void moveRight() {
 		
 		play = true; //set to false at top
-		playerX += 20; //move
+		playerX += 30; //move
 	
 	}
 
 	public void moveLeft() {
 			
 			play = true; //set to false at top
-			playerX -= 20; //move
+			playerX -= 30; //move
 		
 	}
 
